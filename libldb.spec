@@ -1,6 +1,6 @@
 Name:            libldb
 Version:         1.4.2
-Release:         2
+Release:         3
 Summary:         A LDAP-like embedded database
 License:         LGPLv3+
 URL:             http://ldb.samba.org/
@@ -11,7 +11,7 @@ Patch6000:       0003-ldb-Out-ouf-bound-read-in-ldb_wildcard_compare.patch
 
 BuildRequires:   gcc popt-devel libxslt docbook-style-xsl python2-devel python2-tdb python2-talloc-devel python2-tevent
 BuildRequires:   libtalloc-devel >= 2.1.11 doxygen openldap-devel libcmocka-devel
-BuildRequires:   libtdb-devel >= 1.3.14 libtevent-devel >= 0.9.36
+BuildRequires:   libtdb-devel >= 1.3.14 libtevent-devel >= 0.9.36 chrpath
 BuildRequires:   lmdb-devel >= 0.9.16 python3-devel python3-tdb python3-talloc-devel python3-tevent
 Requires:        libtalloc%{?_isa} >= 2.1.11 libtdb%{?_isa} >= 1.3.14 libtevent%{?_isa} >= 0.9.36
 
@@ -100,6 +100,13 @@ doxygen Doxyfile
 find $RPM_BUILD_ROOT -name "*.so*" -exec chmod -c +x {} \;
 cp -a apidocs/man/* $RPM_BUILD_ROOT/%{_mandir}
 
+chrpath -d $RPM_BUILD_ROOT%{_libdir}/ldb/modules/ldb/*.so*
+chrpath -d $RPM_BUILD_ROOT%{_libdir}/ldb/*.so*
+
+mkdir -p $RPM_BUILD_ROOT/etc/ld.so.conf.d
+echo "%{_libdir}/ldb" > $RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}-%{_arch}.conf
+rm -f $RPM_BUILD_ROOT%{_libdir}/libldb.a
+
 %check
 %if %{?_with_check:1}%{!?_with_check:0}
 %make_build check
@@ -123,6 +130,7 @@ ldconfig
 %{_libdir}/ldb/lib*.so
 %{_libdir}/ldb/modules/ldb/*.so
 %{_bindir}/ldb*
+%config(noreplace) /etc/ld.so.conf.d/*
 %exclude %{_libdir}/libldb.a
 
 %files devel
@@ -160,6 +168,12 @@ ldconfig
 %exclude /%{_mandir}/man3/_*
 
 %changelog
+* Thu Dec 26 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.4.2-3
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC:remove rpath and runpath of exec files and libraries
+
 * Wed Sep 11 2019 liyongqiang<liyongqiang10@huawei.com> - 1.4.2-2
 - Package init
 

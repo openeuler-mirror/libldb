@@ -87,7 +87,6 @@ doxygen Doxyfile
 %check
 echo disabling one assertion in tests/python/repack.py
 sed -e '/test_guid_indexed_v1_db/,+18{/toggle_guidindex_check_pack/d}' -i tests/python/repack.py
-
 make %{?_smp_mflags} check
 
 %install

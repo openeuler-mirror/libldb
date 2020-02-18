@@ -85,10 +85,8 @@ make %{?_smp_mflags} V=1
 doxygen Doxyfile
 
 %check
-%ifarch ppc64le
 echo disabling one assertion in tests/python/repack.py
 sed -e '/test_guid_indexed_v1_db/,+18{/toggle_guidindex_check_pack/d}' -i tests/python/repack.py
-%endif
 
 make %{?_smp_mflags} check
 

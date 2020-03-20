@@ -6,7 +6,7 @@
 
 Name:          libldb
 Version:       2.0.8
-Release:       1
+Release:       2
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -18,7 +18,7 @@ Source:        http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
 BuildRequires: libxslt docbook-style-xsl python3-devel python3-tdb python3-talloc-devel
-BuildRequires: python3-tevent doxygen openldap-devel libcmocka-devel
+BuildRequires: python3-tevent doxygen openldap-devel libcmocka-devel gdb
 
 Provides:      bundled(libreplace) ldb-tools
 Obsoletes:     python2-ldb < 2.0.5-1 python2-ldb-devel < 2.0.5-1 pyldb < 1.1.26-2 ldb-tools
@@ -150,6 +150,9 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Fri Mar 20 2020 songnannan <songnannan2@huawei.com> - 2.0.8-2
+- add gdb in buildrequires
+
 * Wed Feb 12 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.0.8-1
 - Type:update
 - ID:NA

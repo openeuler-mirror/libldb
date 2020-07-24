@@ -1,12 +1,12 @@
 %global with_lmdb 1
 %global with_python3 1
-%global talloc_version 2.2.0
-%global tdb_version 1.4.1
-%global tevent_version 0.10.0
+%global talloc_version 2.3.0
+%global tdb_version 1.4.3
+%global tevent_version 0.10.2
 
 Name:          libldb
-Version:       2.0.8
-Release:       2
+Version:       2.2.0
+Release:       1
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -18,7 +18,7 @@ Source:        http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
 BuildRequires: libxslt docbook-style-xsl python3-devel python3-tdb python3-talloc-devel
-BuildRequires: python3-tevent doxygen openldap-devel libcmocka-devel gdb
+BuildRequires: python3-tevent doxygen openldap-devel libcmocka-devel gdb gnupg2
 
 Provides:      bundled(libreplace) ldb-tools
 Obsoletes:     python2-ldb < 2.0.5-1 python2-ldb-devel < 2.0.5-1 pyldb < 1.1.26-2 ldb-tools
@@ -81,16 +81,16 @@ export python_LDFLAGS=""
            %{?without_lmdb_flags} \
            --with-privatelibdir=%{_libdir}/ldb
 
-make %{?_smp_mflags} V=1
+%make_build
 doxygen Doxyfile
 
 %check
 echo disabling one assertion in tests/python/repack.py
 sed -e '/test_guid_indexed_v1_db/,+18{/toggle_guidindex_check_pack/d}' -i tests/python/repack.py
-make %{?_smp_mflags} check
+%make_build check
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install 
 cp -a apidocs/man/* $RPM_BUILD_ROOT/%{_mandir}
 rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 
@@ -150,6 +150,12 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Fri Jul 24 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.2.0-1
+- Type:update
+- ID:NA
+- SUG:NA
+- DESC:update to 2.2.0
+
 * Fri Mar 20 2020 songnannan <songnannan2@huawei.com> - 2.0.8-2
 - add gdb in buildrequires
 

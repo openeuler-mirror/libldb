@@ -82,16 +82,17 @@ export python_LDFLAGS=""
            %{?without_lmdb_flags} \
            --with-privatelibdir=%{_libdir}/ldb
 
-%make_build
+make %{?_smp_mflags} V=1
 doxygen Doxyfile
 
 %check
 echo disabling one assertion in tests/python/repack.py
 sed -e '/test_guid_indexed_v1_db/,+18{/toggle_guidindex_check_pack/d}' -i tests/python/repack.py
-%make_build check
+
+make %{?_smp_mflags} check
 
 %install
-%make_install 
+make install DESTDIR=$RPM_BUILD_ROOT 
 cp -a apidocs/man/* $RPM_BUILD_ROOT/%{_mandir}
 rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 

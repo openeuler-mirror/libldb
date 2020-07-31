@@ -1,11 +1,11 @@
 %global with_lmdb 1
 %global with_python3 1
-%global talloc_version 2.3.0
+%global talloc_version 2.3.1
 %global tdb_version 1.4.3
 %global tevent_version 0.10.2
 
 Name:          libldb
-Version:       2.2.0
+Version:       2.1.4
 Release:       1
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
@@ -13,7 +13,8 @@ Requires:      libtdb%{?_isa} >= %{tdb_version}
 Requires:      libtevent%{?_isa} >= %{tevent_version}
 License:       LGPLv3+
 URL:           http://ldb.samba.org/
-Source:        http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
+Source0:       http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
+Source1:       http://samba.org/ftp/ldb/ldb-%{version}.tar.asc
 
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
@@ -150,11 +151,11 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
-* Fri Jul 24 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.2.0-1
+* Fri Jul 24 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.1.4-1
 - Type:update
 - ID:NA
 - SUG:NA
-- DESC:update to 2.2.0
+- DESC:update to 2.1.4
 
 * Fri Mar 20 2020 songnannan <songnannan2@huawei.com> - 2.0.8-2
 - add gdb in buildrequires

@@ -6,7 +6,7 @@
 
 Name:          libldb
 Version:       2.0.8
-Release:       2
+Release:       3
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -150,6 +150,12 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Tue Aug 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.0.8-3
+- Type:rebuild
+- ID:NA
+- SUG:NA
+- DESC:rebuild for requirement package update
+
 * Fri Mar 20 2020 songnannan <songnannan2@huawei.com> - 2.0.8-2
 - add gdb in buildrequires
 

@@ -5,15 +5,15 @@
 %global tevent_version 0.10.0
 
 Name:          libldb
-Version:       2.0.8
-Release:       3
+Version:       2.0.12
+Release:       1
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
 Requires:      libtevent%{?_isa} >= %{tevent_version}
 License:       LGPLv3+
 URL:           http://ldb.samba.org/
-Source:        http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
+Source0:       https://www.samba.org/ftp/ldb/ldb-%{version}.tar.gz
 
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
@@ -150,6 +150,12 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Mon Aug 31 2020 gaihuiying <gaihuiying1@huawei.com> - 2.0.12-1
+- Type:requirement
+- ID:NA
+- SUG:NA
+- DESC:update to 2.0.12
+
 * Tue Aug 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.0.8-3
 - Type:rebuild
 - ID:NA

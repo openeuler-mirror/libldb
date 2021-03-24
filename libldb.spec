@@ -6,7 +6,7 @@
 
 Name:          libldb
 Version:       2.0.12
-Release:       1
+Release:       2
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -14,6 +14,8 @@ Requires:      libtevent%{?_isa} >= %{tevent_version}
 License:       LGPLv3+
 URL:           http://ldb.samba.org/
 Source0:       https://www.samba.org/ftp/ldb/ldb-%{version}.tar.gz
+
+Patch0:        Skip-ldb_lmdb_free_list_test-on-ppc64el-ppc64-and-sp.patch
 
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
@@ -150,6 +152,12 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Tue Mar 23 2021 gaihuiying <gaihuiying1@huawei.com> - 2.0.12-2
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:fix tests failed when build with rpmbuild command
+
 * Mon Aug 31 2020 gaihuiying <gaihuiying1@huawei.com> - 2.0.12-1
 - Type:requirement
 - ID:NA

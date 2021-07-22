@@ -6,7 +6,7 @@
 
 Name:          libldb
 Version:       2.1.4
-Release:       2
+Release:       3
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -22,7 +22,7 @@ Patch1:        Skip-ldb_lmdb_free_list_test-on-ppc64el-ppc64-and-sp.patch
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
 BuildRequires: libxslt docbook-style-xsl python3-devel python3-tdb python3-talloc-devel
-BuildRequires: python3-tevent doxygen openldap-devel libcmocka-devel gdb gnupg2
+BuildRequires: python3-tevent doxygen openldap-devel libcmocka-devel gnupg2
 
 Provides:      bundled(libreplace) ldb-tools
 Obsoletes:     python2-ldb < 2.0.5-1 python2-ldb-devel < 2.0.5-1 pyldb < 1.1.26-2 ldb-tools
@@ -154,6 +154,12 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Mon Jul 19 2021 lijingyuan <lijingyuan3@huawei.com> - 2.1.4-3
+- Type:requirement
+- ID:NA
+- SUG:NA
+- DESC:cancel gdb in buildrequires
+
 * Tue Mar 23 2021 gaihuiying <gaihuiying1@huawei.com> - 2.1.4-2
 - Type:bugfix
 - ID:NA

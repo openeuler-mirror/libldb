@@ -6,7 +6,7 @@
 
 Name:          libldb
 Version:       2.1.4
-Release:       3
+Release:       4
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -23,6 +23,7 @@ BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_ve
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
 BuildRequires: libxslt docbook-style-xsl python3-devel python3-tdb python3-talloc-devel
 BuildRequires: python3-tevent doxygen openldap-devel libcmocka-devel gnupg2
+BuildRequires: chrpath
 
 Provides:      bundled(libreplace) ldb-tools
 Obsoletes:     python2-ldb < 2.0.5-1 python2-ldb-devel < 2.0.5-1 pyldb < 1.1.26-2 ldb-tools
@@ -98,6 +99,23 @@ make install DESTDIR=$RPM_BUILD_ROOT
 cp -a apidocs/man/* $RPM_BUILD_ROOT/%{_mandir}
 rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 
+# remove rpath
+chrpath -d %{buildroot}%{_bindir}/ldbrename
+chrpath -d %{buildroot}%{_bindir}/ldbedit
+chrpath -d %{buildroot}%{_bindir}/ldbmodify
+chrpath -d %{buildroot}%{_bindir}/ldbadd
+chrpath -d %{buildroot}%{_bindir}/ldbdel
+chrpath -d %{buildroot}%{_bindir}/ldbsearch
+chrpath -d %{buildroot}%{_libdir}/ldb/libldb-mdb-int.so
+chrpath -d %{buildroot}%{_libdir}/ldb/libldb-tdb-int.so
+chrpath -d %{buildroot}%{_libdir}/ldb/libldb-key-value.so
+chrpath -d %{buildroot}%{_libdir}/ldb/modules/ldb/tdb.so
+chrpath -d %{buildroot}%{_libdir}/ldb/modules/ldb/ldb.so
+chrpath -d %{buildroot}%{_libdir}/ldb/modules/ldb/mdb.so
+
+mkdir -p %{buildroot}/etc/ld.so.conf.d
+echo "%{_libdir}/ldb" > %{buildroot}/etc/ld.so.conf.d/%{name}-%{_arch}.conf
+
 %ldconfig_scriptlets
 
 %files
@@ -107,6 +125,7 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_bindir}/ldbmodify
 %{_bindir}/ldbrename
 %{_bindir}/ldbsearch
+%config(noreplace) /etc/ld.so.conf.d/*
 %dir %{_libdir}/ldb
 %{_libdir}/libldb.so.*
 %{_libdir}/ldb/libldb-key-value.so
@@ -154,6 +173,12 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Tue Sep 07 2021 gaihuiying <gaihuiying1@huawei.com> - 2.1.4-4
+- Type:requirement
+- ID:NA
+- SUG:NA
+- DESC:remove rpath of libldb's binary files
+
 * Mon Jul 19 2021 lijingyuan <lijingyuan3@huawei.com> - 2.1.4-3
 - Type:requirement
 - ID:NA

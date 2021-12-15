@@ -1,12 +1,12 @@
 %global with_lmdb 1
 %global with_python3 1
-%global talloc_version 2.3.1
-%global tdb_version 1.4.3
-%global tevent_version 0.10.2
+%global talloc_version 2.3.3
+%global tdb_version 1.4.4
+%global tevent_version 0.11.0
 
 Name:          libldb
-Version:       2.1.4
-Release:       4
+Version:       2.4.1
+Release:       1
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -16,8 +16,7 @@ URL:           http://ldb.samba.org/
 Source0:       http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
 Source1:       http://samba.org/ftp/ldb/ldb-%{version}.tar.asc
 
-Patch0:        Fix-FTBFS-Increase-the-over-estimation-for-sparse-files.patch
-Patch1:        Skip-ldb_lmdb_free_list_test-on-ppc64el-ppc64-and-sp.patch
+Patch0:        backport-Skip-ldb_lmdb_free_list_test-on-ppc64el-ppc64-and-sp.patch
 
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
@@ -86,16 +85,14 @@ export python_LDFLAGS=""
            %{?without_lmdb_flags} \
            --with-privatelibdir=%{_libdir}/ldb
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 doxygen Doxyfile
 
 %check
-echo disabling one assertion in tests/python/repack.py
-sed -e '/test_guid_indexed_v1_db/,+18{/toggle_guidindex_check_pack/d}' -i tests/python/repack.py
 make %{?_smp_mflags} check
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 cp -a apidocs/man/* $RPM_BUILD_ROOT/%{_mandir}
 rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 
@@ -173,6 +170,12 @@ echo "%{_libdir}/ldb" > %{buildroot}/etc/ld.so.conf.d/%{name}-%{_arch}.conf
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Wed Dec 15 2021 yanglu <yanglu72@huawei.com> - 2.4.1-1
+- Type:update
+- ID:NA
+- SUG:NA
+- DESC:update to 2.4.1
+
 * Tue Sep 07 2021 gaihuiying <gaihuiying1@huawei.com> - 2.1.4-4
 - Type:requirement
 - ID:NA

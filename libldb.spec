@@ -164,7 +164,7 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 - SUG:NA
 - DESC:update to 2.0.12
 
-* Tue Aug 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.0.8-3
+* Fri Aug 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.0.8-3
 - Type:rebuild
 - ID:NA
 - SUG:NA

@@ -6,7 +6,7 @@
 
 Name:          libldb
 Version:       2.0.12
-Release:       2
+Release:       3
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -16,6 +16,12 @@ URL:           http://ldb.samba.org/
 Source0:       https://www.samba.org/ftp/ldb/ldb-%{version}.tar.gz
 
 Patch0:        Skip-ldb_lmdb_free_list_test-on-ppc64el-ppc64-and-sp.patch
+Patch1:        backport-pre-CVE-2022-32746-ldb_msg-Dont-fail-in-ldb_msg_copy-if-source-DN-is-NULL.patch
+Patch2:        backport-001-CVE-2022-32746.patch
+Patch3:        backport-002-CVE-2022-32746.patch
+Patch4:        backport-003-CVE-2022-32746.patch
+Patch5:        backport-004-CVE-2022-32746.patch
+Patch6:        backport-005-CVE-2022-32746.patch
 
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
@@ -152,6 +158,12 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man3/_*
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Mon Aug 01 2022 gaihuiying <eaglegai@163.com> - 2.0.12-3
+- Type:CVE
+- ID:CVE-2022-32746
+- SUG:NA
+- DESC:fix CVE-2022-32746
+
 * Tue Mar 23 2021 gaihuiying <gaihuiying1@huawei.com> - 2.0.12-2
 - Type:bugfix
 - ID:NA

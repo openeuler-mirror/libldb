@@ -6,7 +6,7 @@
 
 Name:          libldb
 Version:       2.4.1
-Release:       1
+Release:       2
 Summary:       A schema-less, ldap like, API and database
 Requires:      libtalloc%{?_isa} >= %{talloc_version}
 Requires:      libtdb%{?_isa} >= %{tdb_version}
@@ -17,6 +17,11 @@ Source0:       http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
 Source1:       http://samba.org/ftp/ldb/ldb-%{version}.tar.asc
 
 Patch0:        backport-Skip-ldb_lmdb_free_list_test-on-ppc64el-ppc64-and-sp.patch
+Patch1:        backport-001-CVE-2022-32746.patch
+Patch2:        backport-002-CVE-2022-32746.patch
+Patch3:        backport-003-CVE-2022-32746.patch
+Patch4:        backport-004-CVE-2022-32746.patch
+Patch5:        backport-005-CVE-2022-32746.patch
 
 BuildRequires: gcc libtalloc-devel >= %{talloc_version} libtdb-devel >= %{tdb_version}
 BuildRequires: libtevent-devel >= %{tevent_version} lmdb-devel >= 0.9.16 popt-devel
@@ -170,6 +175,12 @@ echo "%{_libdir}/ldb" > %{buildroot}/etc/ld.so.conf.d/%{name}-%{_arch}.conf
 %{_mandir}/man1/ldbsearch.1.*
 
 %changelog
+* Mon Aug 01 2022 gaihuiying <eaglegai@163.com> - 2.4.1-2
+- Type:CVE
+- ID:CVE-2022-32746
+- SUG:NA
+- DESC:fix CVE-2022-32746
+
 * Wed Dec 15 2021 yanglu <yanglu72@huawei.com> - 2.4.1-1
 - Type:update
 - ID:NA
